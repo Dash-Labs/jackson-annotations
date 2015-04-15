@@ -52,7 +52,6 @@ import java.lang.annotation.*;
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE,
     ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-@JacksonAnnotation
 public @interface JsonTypeInfo
 {    
     /*

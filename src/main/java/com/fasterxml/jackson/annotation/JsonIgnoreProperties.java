@@ -28,7 +28,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE,
     ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@JacksonAnnotation
 public @interface JsonIgnoreProperties
 {
     /**

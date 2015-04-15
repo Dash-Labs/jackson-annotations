@@ -16,7 +16,6 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@JacksonAnnotation
 public @interface JsonTypeName {
     /**
      * Logical type name for annotated type. If missing (or defined as Empty String),
