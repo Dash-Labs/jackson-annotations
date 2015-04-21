@@ -23,6 +23,7 @@ import java.lang.annotation.Target;
     ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER // new in 2.3
 })
 @Retention(RetentionPolicy.RUNTIME)
+@com.fasterxml.jackson.annotation.JacksonAnnotation
 public @interface JsonFilter
 {
     /**

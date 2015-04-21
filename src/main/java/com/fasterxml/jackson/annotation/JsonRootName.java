@@ -18,6 +18,7 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
+@com.fasterxml.jackson.annotation.JacksonAnnotation
 public @interface JsonRootName
 {
     /**

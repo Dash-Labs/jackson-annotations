@@ -5,6 +5,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.fasterxml.jackson.annotation.JacksonAnnotation;
+
 /**
  * Annotation used for indicating view(s) that the property
  * that is defined by method or field annotated is part of.
@@ -23,6 +25,7 @@ import java.lang.annotation.Target;
 	    ElementType.PARAMETER // since 2.5
 })
 @Retention(RetentionPolicy.RUNTIME)
+@JacksonAnnotation
 public @interface JsonView {
     /**
      * View or views that annotated element is part of. Views are identified

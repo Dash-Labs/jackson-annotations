@@ -57,6 +57,7 @@ import java.util.TimeZone;
 @Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER,
     ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
+@JacksonAnnotation
 public @interface JsonFormat
 {
     /**

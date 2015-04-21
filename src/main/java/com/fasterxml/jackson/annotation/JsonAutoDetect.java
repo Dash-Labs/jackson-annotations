@@ -32,6 +32,7 @@ import java.lang.reflect.Modifier;
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
+@JacksonAnnotation
 public @interface JsonAutoDetect
 {
     /**
