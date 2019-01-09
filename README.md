@@ -3,9 +3,9 @@
 This project contains general purpose annotations for
 Jackson Data Processor, used on value and handler types.
 The only annotations not included are ones that require dependency
-to the [Databind package](/FasterXML/jackson-databind).
+to the [Databind package](../../../jackson-databind).
 
-Project contains versions 2.0 and above: source code for earlier (1.x) versions is available from [Codehaus](http://jackson.codehaus.org) SVN repository.
+Project contains versions 2.0 and above: source code for earlier (1.x) versions is available from [Jackson-1](../../../jackson-1) SVN repository.
 Note that with version 1.x these annotations were part of the 'core jar'.
 
 [Full Listing of Jackson Annotations](../../wiki/Jackson-Annotations) details all available annotations;
@@ -15,6 +15,7 @@ Project is licensed under [Apache License 2.0](http://www.apache.org/licenses/LI
 
 
 [![Build Status](https://travis-ci.org/FasterXML/jackson-annotations.png?branch=master)](https://travis-ci.org/FasterXML/jackson-annotations) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.fasterxml.jackson.core/jackson-annotations/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.fasterxml.jackson.core/jackson-annotations)
+[![Javadoc](https://javadoc.io/badge/com.fasterxml.jackson.core/jackson-annotations.svg)](http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-annotations)
 
 -----
 
@@ -40,7 +41,7 @@ To use annotations, you need to use Maven dependency:
 </dependency>
 ```
 
-or download jars from Maven repository (or via quick links on [Wiki](../../wiki)
+or download jars from Maven repository (or via quick links on [Wiki](../../wiki))
 
 ## Usage, simple
 

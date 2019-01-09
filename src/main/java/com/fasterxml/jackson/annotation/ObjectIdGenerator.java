@@ -42,8 +42,6 @@ public abstract class ObjectIdGenerator<T>
      *<p>
      * Default implementation returns <code>false</code>, so needs to be overridden
      * by Object-producing generators.
-     *
-     * @since 2.5
      */
     public boolean maySerializeAsObject() {
         return false;
@@ -57,8 +55,6 @@ public abstract class ObjectIdGenerator<T>
      * @param parser Parser that points to property name, in case generator needs
      *    further verification (note: untyped, because <code>JsonParser</code> is defined
      *    in `jackson-core`, and this package does not depend on it).
-     * 
-     * @since 2.5
      */
     public boolean isValidReferencePropertyName(String name, Object parser) {
         return false;
@@ -145,12 +141,12 @@ public abstract class ObjectIdGenerator<T>
          */
         public final Object key;
 
-        /**
-         * Hash code
-         */
         private final int hashCode;
         
         public IdKey(Class<?> type, Class<?> scope, Object key) {
+            if (key == null) {
+                throw new IllegalArgumentException("Can not construct IdKey for null key");
+            }
             this.type = type;
             this.scope = scope;
             this.key = key;
@@ -173,6 +169,13 @@ public abstract class ObjectIdGenerator<T>
             if (o.getClass() != getClass()) return false;
             IdKey other = (IdKey) o;
             return (other.key.equals(key)) && (other.type == type) && (other.scope == scope);
+        }
+
+        @Override
+        public String toString() {
+            return String.format("[ObjectId: key=%s, type=%s, scope=%s]", key,
+                    (type == null) ? "NONE" : type.getName(),
+                    (scope == null) ? "NONE" : scope.getName());
         }
     }
 }

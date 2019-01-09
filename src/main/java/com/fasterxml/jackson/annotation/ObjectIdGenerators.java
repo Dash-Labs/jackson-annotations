@@ -3,7 +3,20 @@ package com.fasterxml.jackson.annotation;
 import java.util.UUID;
 
 /**
- * Container class for standard {@link ObjectIdGenerator} implementations.
+ * Container class for standard {@link ObjectIdGenerator} implementations:
+ *<ul>
+ *  <li>{@link IntSequenceGenerator}
+ *  <li>{@link PropertyGenerator}
+ *  <li>{@link StringIdGenerator}
+ *  <li>{@link UUIDGenerator}
+ *</ul>
+ *<p>
+ * NOTE: {@link PropertyGenerator} applicability is limited in one case: it can only
+ * be used on polymorphic base types (ones indicated using {@link JsonTypeInfo} or
+ * default typing) via class annotations: property annotation will fail due to lack
+ * of access to property, needed to determine type of Object Id for deserialization.
+ * This limitation may be lifted in future versions but it is the limitation at least
+ * up to and including Jackson 2.9.
  */
 public class ObjectIdGenerators
 {
@@ -92,11 +105,19 @@ public class ObjectIdGenerators
 
         @Override
         public IdKey key(Object key) {
+            // 02-Apr-2015, tatu: As per [annotations#56], should check for null
+            if (key == null) {
+                return null;
+            }
             return new IdKey(getClass(), _scope, key);
         }
         
         @Override
         public Integer generateId(Object forPojo) {
+            // 02-Apr-2015, tatu: As per [annotations#56], should check for null
+            if (forPojo == null)  {
+                return null;
+            }
             int id = _nextValue;
             ++_nextValue;
             return id;
@@ -144,6 +165,10 @@ public class ObjectIdGenerators
 
         @Override
         public IdKey key(Object key) {
+            // 02-Apr-2015, tatu: As per [annotations#56], should check for null
+            if (key == null) {
+                return null;
+            }
             return new IdKey(getClass(), null, key);
         }
 
@@ -153,6 +178,58 @@ public class ObjectIdGenerators
         @Override
         public boolean canUseFor(ObjectIdGenerator<?> gen) {
             return (gen.getClass() == getClass());
+        }
+    }
+
+    /**
+     * Implementation that will accept arbitrary (but unique) String Ids on
+     * deserialization, and (by default) use random UUID generation similar
+     * to {@link UUIDGenerator} for generation ids.
+     *<p>
+     * This generator is most useful for cases where another system creates
+     * String Ids (of arbitrary structure, if any), and Jackson only needs to
+     * keep track of id-to-Object mapping. Generation also works, although if
+     * UUIDs are always used, {@link UUIDGenerator} is a better match as it
+     * will also validate ids being used.
+     */
+    public final static class StringIdGenerator extends Base<String>
+    {
+        private static final long serialVersionUID = 1L;
+
+        public StringIdGenerator() { this(Object.class); }
+        private StringIdGenerator(Class<?> scope) {
+            super(Object.class);
+        }
+
+        // Can just return base instance since this is essentially scopeless
+        @Override
+        public ObjectIdGenerator<String> forScope(Class<?> scope) {
+            return this;
+        }
+
+        // Can just return base instance since this is essentially scopeless
+        @Override
+        public ObjectIdGenerator<String> newForSerialization(Object context) {
+            return this;
+        }
+
+        @Override
+        public String generateId(Object forPojo) {
+            return UUID.randomUUID().toString();
+        }
+
+        @Override
+        public IdKey key(Object key) {
+            if (key == null) {
+                return null;
+            }
+            return new IdKey(getClass(), null, key);
+        }
+
+        // Should be usable for generic Opaque String ids?
+        @Override
+        public boolean canUseFor(ObjectIdGenerator<?> gen) {
+            return (gen instanceof StringIdGenerator);
         }
     }
 }
